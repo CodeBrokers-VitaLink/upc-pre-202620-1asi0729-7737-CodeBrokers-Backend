@@ -1,5 +1,7 @@
 # VitaLink Backend
 
+Para publicar el backend y la base de datos en internet, sigue [DEPLOYMENT.md](DEPLOYMENT.md).
+
 **Paquete con soporte completo para el JSON del dashboard.** Para cargar los datos, sigue [importacion/LEEME.md](importacion/LEEME.md). No se importan automáticamente ni se borran los datos anteriores.
 
 

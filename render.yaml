@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: vitalink-backend
+    runtime: docker
+    plan: free
+    healthCheckPath: /v3/api-docs
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: JAVA_TOOL_OPTIONS
+        value: -Xms64m -Xmx256m
+      - key: DATABASE_HOST
+        sync: false
+      - key: DATABASE_PORT
+        value: "4000"
+      - key: DATABASE_NAME
+        value: vitalink
+      - key: DATABASE_USER
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: FRONTEND_ORIGIN
+        sync: false
+      - key: DATABASE_DDL_AUTO
+        value: validate
