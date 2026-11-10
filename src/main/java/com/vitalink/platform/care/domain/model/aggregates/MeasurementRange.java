@@ -44,4 +44,21 @@ public class MeasurementRange {
     range.diastolicMax = 80d;
     return range;
   }
+
+  /** Default adult reference ranges for visual review, not diagnostic criteria. */
+  public static java.util.List<MeasurementRange> adultReferenceCatalog() {
+    var oxygen = new MeasurementRange("oxygen", "%", 95d, 100d, null, null);
+    oxygen.dangerAtOrBelow = 88d;
+    var pressure = bloodPressure();
+    pressure.systolicMax = Math.nextDown(120d);
+    pressure.diastolicMax = Math.nextDown(80d);
+    // Measurements may contain decimals; values above 180/120 are high alert.
+    pressure.systolicDangerFrom = Math.nextUp(180d);
+    pressure.diastolicDangerFrom = Math.nextUp(120d);
+    return java.util.List.of(
+        new MeasurementRange("heartRate", "bpm", 60d, 100d, 40d, 150d),
+        oxygen,
+        new MeasurementRange("glucose", "mg/dL", 70d, 99d, 55d, 300d),
+        pressure);
+  }
 }
