@@ -6,11 +6,11 @@ import com.vitalink.platform.shared.domain.model.exceptions.BusinessException;
 public record InitialVitalSigns(
     Double heartRate, Double oxygen, Double glucose, Double systolic, Double diastolic) {
   public InitialVitalSigns {
-    valid(heartRate, 1, 300, "Frecuencia cardíaca");
-    valid(oxygen, 0, 100, "Saturación de oxígeno");
-    valid(glucose, 1, 1000, "Glucosa");
-    valid(systolic, 1, 300, "Presión sistólica");
-    valid(diastolic, 1, 200, "Presión diastólica");
+    valid(heartRate, 20, 300, "Frecuencia cardíaca");
+    valid(oxygen, 1, 100, "Saturación de oxígeno");
+    valid(glucose, 20, 1000, "Glucosa");
+    valid(systolic, 40, 300, "Presión sistólica");
+    valid(diastolic, 20, 200, "Presión diastólica");
     BusinessException.require(
         systolic > diastolic, 400, "La presión sistólica debe ser mayor que la diastólica.");
   }
