@@ -120,5 +120,4 @@ Este perfil usa H2 persistente en data/, con datos demo solo para pruebas.
 No uses dev,local en Render. Las cuentas demo usan Demo12345 y el paciente
 elena@vitalink.demo permite probar la recepcion de observaciones.
 
-Pruebas: ./mvnw.cmd test. ObservationFlowTest verifica mediante HTTP permisos,
-historial, lectura de notificaciones, cierre de alertas y validacion del registro.
+La carpeta src/test se mantiene vacia y excluida de Git por indicacion del propietario.

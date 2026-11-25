@@ -8,3 +8,6 @@ release/*.jar
 importacion/backups/
 
 data/
+
+# Las pruebas no se incluyen en este repositorio.
+/src/test/

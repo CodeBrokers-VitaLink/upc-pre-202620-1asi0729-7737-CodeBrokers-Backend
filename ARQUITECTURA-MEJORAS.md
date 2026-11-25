@@ -46,11 +46,6 @@ La persistencia de observacion y notificaciones y el cierre de alertas se realiz
 en transacciones. La politica de correo permanece: cola persistente, hasta cinco
 intentos, sin envio cuando faltan variables, SENT indica aceptacion del proveedor.
 
-ObservationFlowTest valida el contrato HTTP, permisos, lectura, cierre y registro.
-DoctorObservationTest comprueba invariantes fuera de REST.
-NotificationEmailDeliveryTest usa puertos en memoria para probar configuracion,
-reintentos, destinatarios ausentes y envio aceptado sin contactar Resend.
-ObservationArchitectureTest protege las dependencias de los nuevos servicios y
-controladores para detectar acoplamientos de infraestructura en futuras mejoras.
-
-Ejecutar con Java 26: ./mvnw.cmd test
+La carpeta src/test se mantiene vacia y excluida del seguimiento de Git por
+indicacion del propietario. Las pruebas ejecutadas antes de esta eliminacion
+validaron el flujo, las reglas de dominio, la cola y las dependencias entre capas.
