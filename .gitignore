@@ -6,3 +6,11 @@ target/
 release/*.jar
 
 importacion/backups/
+
+data/
+
+# Las pruebas no se incluyen en este repositorio.
+/src/test/
+
+# Scripts de importacion conservados solo localmente.
+/importacion/

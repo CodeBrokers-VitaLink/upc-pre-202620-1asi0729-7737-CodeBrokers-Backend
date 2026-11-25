@@ -6,6 +6,7 @@ import com.vitalink.platform.iam.application.commandservices.*;
 import com.vitalink.platform.iam.domain.model.aggregates.*;
 import com.vitalink.platform.iam.domain.model.commands.*;
 import com.vitalink.platform.iam.domain.model.valueobjects.*;
+import com.vitalink.platform.iam.domain.ports.MedicalCredentialValidation;
 import com.vitalink.platform.iam.infrastructure.persistence.jpa.*;
 import com.vitalink.platform.iam.infrastructure.security.TokenCodec;
 import com.vitalink.platform.providers.domain.model.aggregates.Doctor;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class AuthenticationCommandServiceImpl implements AuthenticationCommandService {
+  private final MedicalCredentialValidation registry;
   private final UserRepository users;
   private final LoginAliasRepository aliases;
   private final AuthSessionRepository sessions;
@@ -38,7 +40,9 @@ public class AuthenticationCommandServiceImpl implements AuthenticationCommandSe
       DoctorRepository doctors,
       ClinicRepository clinics,
       PatientRepository patients,
-      CareRelationshipRepository relationships) {
+      CareRelationshipRepository relationships,
+      MedicalCredentialValidation registry) {
+    this.registry = registry;
     this.users = users;
     this.aliases = aliases;
     this.sessions = sessions;
@@ -52,6 +56,7 @@ public class AuthenticationCommandServiceImpl implements AuthenticationCommandSe
   public Result<User, RegistrationFailure> handle(SignUpCommand c) {
     var email = new Email(c.email()).value();
     var role = Role.from(c.role());
+    if (role == Role.DOCTOR) registry.validate(c.professionalLicense(), c.name());
     if (users.existsByEmail(email)
         || aliases.existsById(email)
         || role == Role.DOCTOR && doctors.existsByProfessionalLicense(c.professionalLicense()))

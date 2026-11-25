@@ -88,3 +88,36 @@ Referencias: https://render.com/docs/docker,
 https://render.com/docs/free,
 https://docs.pingcap.com/developer/dev-guide-sample-application-java-jdbc/,
 https://www.pingcap.com/pricing/.
+
+## Observaciones, notificaciones y registro medico
+
+Antes de desplegar esta version, aplica importacion/observaciones.sql en la base
+que usa Render si faltan las tablas doctor_observations y observation_notifications.
+El script solo crea estas tablas e indices. Si ya existen, verifica sus columnas:
+CREATE TABLE IF NOT EXISTS no corrige estructuras existentes.
+Conserva SPRING_PROFILES_ACTIVE=prod y DATABASE_DDL_AUTO=validate.
+
+Para correo configura RESEND_API_KEY y MAIL_FROM en el backend de Render.
+MAIL_FROM debe ser un remitente autorizado en Resend. Sin ambas variables los
+avisos permanecen en cola y las notificaciones dentro de la aplicacion funcionan.
+El worker intenta enviar cada minuto, hasta cinco intentos; SENT significa aceptado
+por el proveedor, no entrega confirmada. El correo no incluye el texto medico.
+
+El catalogo de colegiaturas es ficticio y se distribuye en
+src/main/resources/fake-medical-registry.json. No consulta al Colegio Medico del Peru.
+GET /api/v1/medical-registry lista cinco medicos y GET /api/v1/medical-registry/{license}
+consulta uno. El registro valida numero, nombre (tolerando tildes, espacios y
+mayusculas) y duplicados. Las colegiaturas disponibles son 70001 a 70005;
+las cuentas se crean al completar el registro, no al consultar el catalogo.
+
+Para una demostracion local sin MySQL, usa Java 26 y:
+
+```powershell
+./mvnw.cmd spring-boot:run '-Dspring-boot.run.profiles=dev,local'
+```
+
+Este perfil usa H2 persistente en data/, con datos demo solo para pruebas.
+No uses dev,local en Render. Las cuentas demo usan Demo12345 y el paciente
+elena@vitalink.demo permite probar la recepcion de observaciones.
+
+La carpeta src/test se mantiene vacia y excluida de Git por indicacion del propietario.
