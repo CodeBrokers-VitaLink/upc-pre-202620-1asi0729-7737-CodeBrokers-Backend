@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class AuthenticationCommandServiceImpl implements AuthenticationCommandService {
+  private final com.vitalink.platform.providers.application.queryservices.FakeMedicalRegistry registry;
   private final UserRepository users;
   private final LoginAliasRepository aliases;
   private final AuthSessionRepository sessions;
@@ -38,7 +39,9 @@ public class AuthenticationCommandServiceImpl implements AuthenticationCommandSe
       DoctorRepository doctors,
       ClinicRepository clinics,
       PatientRepository patients,
-      CareRelationshipRepository relationships) {
+      CareRelationshipRepository relationships,
+      com.vitalink.platform.providers.application.queryservices.FakeMedicalRegistry registry) {
+    this.registry = registry;
     this.users = users;
     this.aliases = aliases;
     this.sessions = sessions;
@@ -52,6 +55,7 @@ public class AuthenticationCommandServiceImpl implements AuthenticationCommandSe
   public Result<User, RegistrationFailure> handle(SignUpCommand c) {
     var email = new Email(c.email()).value();
     var role = Role.from(c.role());
+    if (role == Role.DOCTOR) registry.validate(c.professionalLicense(), c.name());
     if (users.existsByEmail(email)
         || aliases.existsById(email)
         || role == Role.DOCTOR && doctors.existsByProfessionalLicense(c.professionalLicense()))

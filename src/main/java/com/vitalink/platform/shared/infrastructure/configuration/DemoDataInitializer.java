@@ -90,6 +90,7 @@ public class DemoDataInitializer implements CommandLineRunner {
                 passwords.encode("Demo12345"),
                 Role.DOCTOR,
                 "900000006"),
+            new User("PT-01", "Elena Pérez", "elena@vitalink.demo", passwords.encode("Demo12345"), Role.PATIENT, "900000007"),
             new User(
                 "FC-01",
                 "María Pérez",
@@ -112,7 +113,7 @@ public class DemoDataInitializer implements CommandLineRunner {
             new Doctor("DR-04", "Diego Castro", "Medicina general", "10004", "clinic", "CL-03")));
     patients.saveAll(
         List.of(
-            new Patient("P-001", "Elena", "Pérez", 72, "Lima", "DR-01", null, Set.of("FC-01")),
+            new Patient("P-001", "Elena", "Pérez", 72, "Lima", "DR-01", "PT-01", Set.of("FC-01")),
             new Patient("P-002", "Carlos", "Pérez", 68, "Lima", null, null, Set.of("FC-01")),
             new Patient("P-003", "Rosa", "Díaz", 75, "Lima", null, null, Set.of("FC-02"))));
     var relation = new CareRelationship("REL-001", "P-001", "DR-01");
