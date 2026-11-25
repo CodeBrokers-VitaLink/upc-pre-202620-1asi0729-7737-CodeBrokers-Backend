@@ -39,7 +39,7 @@ public class SecurityConfiguration {
                         "/v3/api-docs/**",
                         "/error")
                     .permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/v1/clinics", "/api/v1/doctors")
+                    .requestMatchers(HttpMethod.GET, "/api/v1/clinics", "/api/v1/doctors", "/api/v1/medical-registry", "/api/v1/medical-registry/*")
                     .permitAll()
                     .anyRequest()
                     .authenticated())
